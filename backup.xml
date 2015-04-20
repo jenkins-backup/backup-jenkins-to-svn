@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!-- 
+    copy from JENKINS_HOME_PATH  to  JENKINS_HOME_BAK_PATH
+    usage: ant -f backup.xml
+    -->
+<project name="" default="backup">
+    <property file="jenkins_config.properties"/>
+    
+    <target name="backup">
+    	<echo message="INFO: copy ${JENKINS_HOME_PATH} to  ${JENKINS_HOME_BAK_PATH} [begin] " />
+        <copy includeemptydirs="false" todir="${JENKINS_HOME_BAK_PATH}" failonerror="false">
+            <fileset dir="${JENKINS_HOME_PATH}" 
+            	excludes="${backup_excludes}"
+            />
+        </copy>
+        <echo message="INFO: copy ${JENKINS_HOME_PATH} to  ${JENKINS_HOME_BAK_PATH} [end] " />
+    </target>
+
+</project>
