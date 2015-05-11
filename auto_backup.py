@@ -33,15 +33,15 @@ def main():
     # 2、调用ant命令copy JENKINS_HOME_PATH to JENKINS_HOME_BAK_PATH
     os.system("ant -f backup.xml")
 
-    # svn_status_file用来存储svn status命令的输出结果
-    svn_status_file = "svn_status.txt"
+    # svn_status_output_file用来存储svn status命令的输出结果
+    svn_status_output_file = "svn_status_output.txt"
 
     # 3、批量将JENKINS_HOME_BAK_PATH中不在版本控制下的目录或文件添加到版本控制
-    # 3.1执行svn status命令，将输出结果定向到svn_status.txt中
-    svncli.status(JENKINS_HOME_BAK_PATH, svn_status_file)
+    # 3.1执行svn status命令，将输出结果定向到svn_status_output.txt中
+    svncli.status(JENKINS_HOME_BAK_PATH, svn_status_output_file)
 
-    # 3.2读取并解析svn_status.txt，将不在版本控制下的目录或文件添加到版本控制，未在版本控制下的文件或目录所在的行会以“?”开头
-    with open(svn_status_file, "r") as f:
+    # 3.2读取并解析svn_status_output.txt，将不在版本控制下的目录或文件添加到版本控制，未在版本控制下的文件或目录所在的行会以“?”开头
+    with open(svn_status_output_file, "r") as f:
         for line in f.readlines():
             if line.startswith("?"):
                 # 去掉字符串前面的"?"和空格
