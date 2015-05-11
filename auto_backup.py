@@ -13,13 +13,19 @@ import logging
     使用到的svn相关命令有：status、add、delete、commit、update
 '''
 
+# JENKINS_CONFIG_FILE，存放JENKINS_HOME_BAK_PATH、JENKINS_HOME_PATH等常量
+JENKINS_CONFIG_FILE = "jenkins_config.properties"
+# BACKUP_BUILD_FILE
+BACKUP_BUILD_FILE = "backup.xml"
+# SVN_STATUS_OUTPUT_FILE用来存储svn status命令的输出结果
+SVN_STATUS_OUTPUT_FILE = "svn_status_output.txt"
+
 
 def main():
     # 从jenkins_config.properties中读取JENKINS_HOME_PATH、JENKINS_HOME_BAK_PATH
     global JENKINS_HOME_BAK_PATH
     global JENKINS_HOME_PATH
-    jenkins_config = "jenkins_config.properties"
-    with open(jenkins_config, "r") as f:
+    with open(JENKINS_CONFIG_FILE, "r") as f:
         for line in f.readlines():
             tmp = line.split("=", 1)
             if "JENKINS_HOME_PATH" == tmp[0].strip():
@@ -31,17 +37,14 @@ def main():
     # 1、在JENKINS_HOME_BAK_PATH执行svn update命令
     svncli.update(JENKINS_HOME_BAK_PATH)
     # 2、调用ant命令copy JENKINS_HOME_PATH to JENKINS_HOME_BAK_PATH
-    os.system("ant -f backup.xml")
-
-    # svn_status_output_file用来存储svn status命令的输出结果
-    svn_status_output_file = "svn_status_output.txt"
+    os.system("ant -f " + BACKUP_BUILD_FILE)
 
     # 3、批量将JENKINS_HOME_BAK_PATH中不在版本控制下的目录或文件添加到版本控制
     # 3.1执行svn status命令，将输出结果定向到svn_status_output.txt中
-    svncli.status(JENKINS_HOME_BAK_PATH, svn_status_output_file)
+    svncli.status(JENKINS_HOME_BAK_PATH, SVN_STATUS_OUTPUT_FILE)
 
     # 3.2读取并解析svn_status_output.txt，将不在版本控制下的目录或文件添加到版本控制，未在版本控制下的文件或目录所在的行会以“?”开头
-    with open(svn_status_output_file, "r") as f:
+    with open(SVN_STATUS_OUTPUT_FILE, "r") as f:
         for line in f.readlines():
             if line.startswith("?"):
                 # 去掉字符串前面的"?"和空格
