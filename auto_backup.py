@@ -60,7 +60,7 @@ def main():
             bakfile = os.path.join(dirpath, f)
             # 与JENKINS_HOME_BAK_PATH下的文件相对应的JENKINS_HOME_PATH下的文件
             orginfile = os.path.join(dirpath.replace(JENKINS_HOME_BAK_PATH, JENKINS_HOME_PATH), f)
-            if bakfile.startswith(JENKINS_HOME_BAK_PATH + ".svn"):
+            if ".svn" in bakfile:
                 # 忽略.svn目录及其下的目录或文件
                 pass
             else:
@@ -74,7 +74,7 @@ def main():
             bakdir = os.path.join(dirpath, bak_dir)
             # 与JENKINS_HOME_BAK_PATH下的目录相对应的JENKINS_HOME_PATH下的目录
             orgindir = os.path.join(dirpath.replace(JENKINS_HOME_BAK_PATH, JENKINS_HOME_PATH), bak_dir)
-            if bakdir.startswith(JENKINS_HOME_BAK_PATH + ".svn"):
+            if ".svn" in bakdir:
                 # 忽略.svn目录及其下的目录或文件
                 pass
             else:
