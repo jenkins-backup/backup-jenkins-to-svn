@@ -106,12 +106,13 @@ thinBackup plugin和backup plugin不同：
 
 补充说明，上述所使用到的工具及环境：
 
-	* Windows 2003 Server
 	* Jenkins 1.592
 	* Python 2.7.8
-	* SVN Server 1.7
-	* svn client commands 1.7（Windows下安装TortoiseSVN时需要手动选择安装）
+	* svn client commands（Windows下安装TortoiseSVN时需要手动选择安装）
 	* Ant 1.8.1
+	* 在windows环境和linux环境都验证测试过
+	* 在svn client 1.7和1.7以上环境都验证测试过
+
 
 
 ###参考###
