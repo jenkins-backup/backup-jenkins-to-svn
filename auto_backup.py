@@ -48,7 +48,7 @@ def main():
         for line in f.readlines():
             if line.startswith("?"):
                 # 去掉字符串前面的"?"和空格
-                line = line.replace("?", "").strip()
+                line = line.replace("?", "", 1).strip()
                 # 将不在版本控制下的目录或文件添加到版本控制
                 svncli.add(line)
 
