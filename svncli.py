@@ -64,7 +64,7 @@ def status(wc_dir, output_file):
 
 # delete_from_wc function : delete from path (woking copy)
 def delete_from_wc(path):
-    delete_command = 'svn delete "%s"' % path
+    delete_command = 'svn delete --force "%s"' % path
     logging.debug(delete_command)
     os.system(delete_command)
     return
